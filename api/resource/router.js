@@ -5,6 +5,10 @@ const router = require('express').Router()
 const Resource = require('./model')
 
 // add middleware here if needed
+const {
+   checkBody,
+   checkName
+} = require('./midd')
 
 router.get('/', async (req, res, next)=>{
    try{
@@ -14,18 +18,10 @@ router.get('/', async (req, res, next)=>{
    }
 })
 
-router.post('/', async (req, res, next)=>{
-   const { resource_name, resource_description } = req.body
-   const prevResc = await Resource.getName(resource_name)
+router.post('/', checkBody, checkName, async (req, res, next)=>{
+   const newResource =  await Resource.create( req.body ) 
    try {
-      if ( !resource_name ){
-         next({ status: 415, message: 'add a resource name' })
-      } else if ( prevResc ) {
-         next({ status: 400, message: 'this RESOURCE name must be unique' })
-      } else {
-         const newResource =  await Resource.create( req.body ) 
-         res.json( newResource )
-      }
+      res.json( newResource )
    } catch(err){
       next(err)
    }
