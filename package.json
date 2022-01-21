@@ -5,7 +5,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=testing jest --verbose --runInBand --silent",
     "server": "nodemon index.js",
-    "latest": "knex migrate:latest",
+    "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
     "resetdb": "npm run rollback && npm run latest && npm run seed"
