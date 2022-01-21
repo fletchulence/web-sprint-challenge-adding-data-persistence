@@ -4,6 +4,7 @@ const db = require('./../../data/dbConfig')
 module.exports = {
    getAll,
    create,
+   getName,
 }
 
 async function getAll(){
@@ -16,10 +17,16 @@ async function getById(project_id){
       .first()
 }
 
-async function create(project){
+async function getName(project_name){
    return await db('projects')
+      .where({ project_name })
+      .first()
+}
+
+function create(project){
+   return db('projects')
       .insert(project)
-      .then(([id]) => {
+      .then(id => {
          return getById(id)
       })
 }

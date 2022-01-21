@@ -9,6 +9,11 @@ const {
    handleBooleanProject
 } = require('./../globalMidds')
 
+const {
+   checkName,
+   checkBody
+} = require('./midd')
+
 router.get('/', handleBooleanProject, (req, res, next)=>{
    // const {responseBody} = await Project.getAll()
    try{
@@ -19,8 +24,16 @@ router.get('/', handleBooleanProject, (req, res, next)=>{
 })
 
 
-router.post('/', (req, res, next)=>{
-
+router.post('/', checkBody, checkName, async (req, res, next)=>{
+   try {
+      const newProject =  await Project.create( req.body ) 
+      res.json({ 
+         ...newProject,
+         project_completed: newProject.project_completed === ( 1 || 'true' ) ? true : false
+      })
+   } catch(err){
+      next(err)
+   }
 })
 
 module.exports = router
