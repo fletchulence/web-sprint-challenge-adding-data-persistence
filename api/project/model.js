@@ -8,7 +8,13 @@ module.exports = {
 }
 
 async function getAll(){
-   return await db('projects')
+   const rows = await db('projects')
+
+   const result = rows.map(el =>({
+      ...el,
+      project_completed: el.project_completed === 1 ? true : false
+   }))
+   return result
 }
 
 async function getById(project_id){
@@ -21,7 +27,7 @@ async function getName(project_name){
    return await db('projects')
       .where({ project_name })
       .first()
-}
+} 
 
 function create(project){
    return db('projects')

@@ -5,19 +5,15 @@ const router = require('express').Router()
 const Project = require('./model')
 
 // add middleware here if needed
-const {
-   handleBooleanProject
-} = require('./../globalMidds')
 
 const {
    checkName,
    checkBody
 } = require('./midd')
 
-router.get('/', handleBooleanProject, (req, res, next)=>{
-   // const {responseBody} = await Project.getAll()
+router.get('/', async (req, res, next)=>{
    try{
-      res.json( req.response )
+      res.json( await Project.getAll() )
    } catch(err){
       next(err)
    }
