@@ -5,20 +5,24 @@ const router = require('express').Router()
 const Task = require('./model')
 
 // add middleware here if needed
-const {
-   handleBooleanTask
-} = require('./../globalMidds')
 
-router.get('/', handleBooleanTask, (req, res, next)=>{
+
+router.get('/', async (req, res, next)=>{
    try{
-      res.json( req.response )
+      res.json( await Task.getAll() )
    } catch(err){
       next(err)
    }
 })
 
-router.post('/', (req, res, next)=>{
-
+router.post('/', async (req, res, next)=>{
+   const newTask = await Task.create( req.body )
+   try{
+      res.json( newTask )
+   } catch(err){
+      next(err)
+   }
 })
 
 module.exports = router
+
