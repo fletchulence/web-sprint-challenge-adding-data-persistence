@@ -6,9 +6,12 @@ const Resource = require('./model')
 
 // add middleware here if needed
 
-router.get('/', (req, res, next)=>{
-   Resource.getAll()
-   res.json({ message: 'working'})
+router.get('/', async (req, res, next)=>{
+   try{
+      res.json( await Resource.getAll() )
+   } catch(err){
+      next(err)
+   }
 })
 
 router.post('/', (req, res, next)=>{

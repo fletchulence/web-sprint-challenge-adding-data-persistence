@@ -5,10 +5,19 @@ const router = require('express').Router()
 const Project = require('./model')
 
 // add middleware here if needed
+const {
+   handleBooleanProject
+} = require('./../globalMidds')
 
-router.get('/', (req, res, next)=>{
-
+router.get('/', handleBooleanProject, (req, res, next)=>{
+   // const {responseBody} = await Project.getAll()
+   try{
+      res.json( req.response )
+   } catch(err){
+      next(err)
+   }
 })
+
 
 router.post('/', (req, res, next)=>{
 

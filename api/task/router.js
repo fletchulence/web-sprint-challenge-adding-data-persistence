@@ -5,9 +5,16 @@ const router = require('express').Router()
 const Task = require('./model')
 
 // add middleware here if needed
+const {
+   handleBooleanTask
+} = require('./../globalMidds')
 
-router.get('/', (req, res, next)=>{
-
+router.get('/', handleBooleanTask, (req, res, next)=>{
+   try{
+      res.json( req.response )
+   } catch(err){
+      next(err)
+   }
 })
 
 router.post('/', (req, res, next)=>{
