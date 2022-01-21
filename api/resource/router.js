@@ -14,8 +14,21 @@ router.get('/', async (req, res, next)=>{
    }
 })
 
-router.post('/', (req, res, next)=>{
-
+router.post('/', async (req, res, next)=>{
+   const { resource_name, resource_description } = req.body
+   const prevResc = await Resource.getName(resource_name)
+   try {
+      if ( !resource_name ){
+         next({ status: 415, message: 'add a resource name' })
+      } else if ( prevResc ) {
+         next({ status: 400, message: 'this RESOURCE name must be unique' })
+      } else {
+         const newResource =  await Resource.create( req.body ) 
+         res.json( newResource )
+      }
+   } catch(err){
+      next(err)
+   }
 })
 
 module.exports = router
