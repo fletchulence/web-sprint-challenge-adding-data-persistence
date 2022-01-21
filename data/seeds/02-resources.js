@@ -8,9 +8,9 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('resources').insert([
-        { "resource_name": "github", "resource_description": null},
-        { "resource_name": "dictionary.com", "resource_description": 'websters rendition of the most popular words'},
-        { "resource_name": "wiki.gov", "resource_description": 'mostly bs from the government'},
+        { resource_name: 'github', resource_description: null},
+        { resource_name: 'dictionary.com', resource_description: 'websters rendition of the most popular words'},
+        { resource_name: 'wiki.gov', resource_description: 'mostly bs from the government'},
       ]);
     });
 };
