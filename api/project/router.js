@@ -5,7 +5,6 @@ const router = require('express').Router()
 const Project = require('./model')
 
 // add middleware here if needed
-
 const {
    checkName,
    checkBody

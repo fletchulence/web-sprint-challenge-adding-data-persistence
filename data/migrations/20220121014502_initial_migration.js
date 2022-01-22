@@ -2,8 +2,8 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function(knex) {
-  return knex.schema
+exports.up = async function(knex) {
+  await knex.schema
    .createTable('projects', tbl =>{
      tbl.increments('project_id')
      tbl.text('project_name').notNullable()
@@ -24,6 +24,8 @@ exports.up = function(knex) {
       .unsigned()
       .notNullable()
       .references('project_id').inTable('projects')
+      .onDelete('RESTRICT')
+      .onUpdate('RESTRICT')
   })
   .createTable('project_resources', tbl => {
      tbl.increments('project_resources_id')
@@ -37,8 +39,8 @@ exports.up = function(knex) {
       .unsigned()
       .notNullable()
       .references('resource_id').inTable('resources')
-      .onDelete('CASCADE')
-      .onUpdate('CASCADE')
+      .onDelete('RESTRICT')
+      .onUpdate('RESTRICT')
   })
 };
 
@@ -46,8 +48,8 @@ exports.up = function(knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function(knex) {
-  return knex.schema
+exports.down = async function(knex) {
+  await knex.schema
    .dropTableIfExists('project_resources')
    .dropTableIfExists('tasks')
    .dropTableIfExists('resources')
